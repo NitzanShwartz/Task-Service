@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+service TaskService {
+    rpc CreateTask (TaskMessage) returns (message EmptyResponse {});
+}
+
+message TaskMessage {
+    string task_title = 1;
+    string task = 2;
+    string user_email = 3;
+}
+
+message EmptyResponse {}
