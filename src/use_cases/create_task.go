@@ -14,14 +14,12 @@ import (
 const emailRegExp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
 
 type CreateTask struct {
-	TaskRepository       repositories.TaskRepository
-	NotificationProvider repositories.TaskNotificationProvider
+	TaskRepository repositories.TaskRepository
 }
 
 func NewCreateTask(taskRepsitory repositories.TaskRepository, notificationProvider repositories.TaskNotificationProvider) *CreateTask {
 	return &CreateTask{
-		TaskRepository:       taskRepsitory,
-		NotificationProvider: notificationProvider,
+		TaskRepository: taskRepsitory,
 	}
 }
 
@@ -48,9 +46,5 @@ func (ct *CreateTask) Execute(title string, description string, userEmail string
 		return err
 	}
 
-	err = ct.NotificationProvider.SendNotification(*task)
-	if err != nil {
-		return err
-	}
 	return nil
 }
