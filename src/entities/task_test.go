@@ -23,7 +23,7 @@ func TestTaskCreationFailNoTitle(t *testing.T) {
 		t.Errorf("this test should provide an error for missing value")
 	}
 
-	if task != nil {
+	if task != entities.NewEmptyTask() {
 		t.Errorf("task should be nil when this function fails")
 	}
 }
@@ -34,7 +34,7 @@ func TestTaskCreationFailNoDescription(t *testing.T) {
 		t.Errorf("this test should provide an error for missing value")
 	}
 
-	if task != nil {
+	if task != entities.NewEmptyTask() {
 		t.Errorf("task should be nil when this function fails")
 	}
 }
@@ -45,7 +45,7 @@ func TestTaskCreationFailNoUserEmail(t *testing.T) {
 		t.Errorf("this test should provide an error for missing value")
 	}
 
-	if task != nil {
+	if task != entities.NewEmptyTask() {
 		t.Errorf("task should be nil when this function fails")
 	}
 }
