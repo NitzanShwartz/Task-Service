@@ -3,21 +3,18 @@ package usecases
 import (
 	"errors"
 	"fmt"
-
-	"regexp"
+	"net/mail"
 
 	"github.com/NitzanShwartz/Task-Service/src/entities"
 	"github.com/NitzanShwartz/Task-Service/src/repositories"
 	"github.com/NitzanShwartz/Task-Service/src/use_cases/exceptions"
 )
 
-const emailRegExp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
-
 type CreateTask struct {
 	TaskRepository repositories.TaskRepository
 }
 
-func NewCreateTask(taskRepsitory repositories.TaskRepository, notificationProvider repositories.TaskNotificationProvider) *CreateTask {
+func NewCreateTask(taskRepsitory repositories.TaskRepository) *CreateTask {
 	return &CreateTask{
 		TaskRepository: taskRepsitory,
 	}
@@ -28,7 +25,7 @@ func (ct *CreateTask) Execute(title string, description string, userEmail string
 		return errors.New("title, task and userEmail are mandatory fields")
 	}
 
-	if match, _ := regexp.MatchString(emailRegExp, userEmail); !match {
+	if _, err := mail.ParseAddress(userEmail); err != nil {
 		return errors.New("emails must be of the format <name>@<domain.tld>")
 	}
 
