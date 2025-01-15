@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package task_grpc;
+
+option go_package = "github.com/NitzanShwartz/Task-Service/src/infra/api/grpcServer;grpc_impl";
+
+service TaskService {
+    rpc CreateTask (TaskMessage) returns (EmptyResponse);
+}
+
+message TaskMessage {
+    string task_title = 1;
+    string task = 2;
+    string user_email = 3;
+}
+
+message EmptyResponse {}
