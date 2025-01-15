@@ -4,6 +4,6 @@ type TaskAlreadyExistsError struct {
 	Message string
 }
 
-func (t *TaskAlreadyExistsError) Error() string {
+func (t TaskAlreadyExistsError) Error() string {
 	return t.Message
 }
