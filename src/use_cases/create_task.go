@@ -20,28 +20,28 @@ func NewCreateTask(taskRepsitory repositories.TaskRepository) *CreateTask {
 	}
 }
 
-func (ct *CreateTask) Execute(title string, description string, userEmail string) error {
+func (ct *CreateTask) Execute(title string, description string, userEmail string) (entities.Task, error) {
 	if title == "" || description == "" || userEmail == "" {
-		return errors.New("title, task and userEmail are mandatory fields")
+		return entities.NewEmptyTask(), errors.New("title, task and userEmail are mandatory fields")
 	}
 
 	if _, err := mail.ParseAddress(userEmail); err != nil {
-		return errors.New("emails must be of the format <name>@<domain.tld>")
+		return entities.NewEmptyTask(), errors.New("emails must be of the format <name>@<domain.tld>")
 	}
 
 	if ct.TaskRepository.DoesTaskExists(title) {
-		return &exceptions.TaskAlreadyExistsError{Message: fmt.Sprintf("a task with the title %v", title)}
+		return entities.NewEmptyTask(), &exceptions.TaskAlreadyExistsError{Message: fmt.Sprintf("a task with the title '%v' already exists", title)}
 	}
 
 	task, err := entities.NewTask(title, description, userEmail)
 	if err != nil {
-		return err
+		return entities.NewEmptyTask(), err
 	}
 
-	err = ct.TaskRepository.CreateTask(*task)
+	err = ct.TaskRepository.CreateTask(task)
 	if err != nil {
-		return err
+		return entities.NewEmptyTask(), err
 	}
 
-	return nil
+	return task, nil
 }
