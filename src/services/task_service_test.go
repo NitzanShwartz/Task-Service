@@ -101,7 +101,7 @@ func TestTaskServiceCreateTasKFailkCreateFailed(t *testing.T) {
 	taskService := services.NewTaskService(taskRepository, notificationRepository)
 	err := taskService.CreateTask("test task", "test task description", "name@email.com")
 	if err == nil {
-		t.Errorf("this function call should fail")
+		t.Error("this function call should fail")
 	}
 	if err.Error() != testErrMsg {
 		t.Errorf("the error that was raised is not the expected error, error: %v", err)
