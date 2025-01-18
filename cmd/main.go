@@ -5,10 +5,16 @@ import (
 	"github.com/NitzanShwartz/Task-Service/src/infra/repositories"
 )
 
+const port = 5052
+
 func main() {
 	inMemoryRepo := repositories.NewInMemoryTaskRepository()
-	inMemoryNotificationRepo := repositories.NewInMemoryNotificationRepository()
+	// inMemoryNotificationRepo := repositories.NewInMemoryNotificationRepository()
+	rabbitmqRepository, err := repositories.NewRabbitMQNotificationRepository("amqp://guest:guest@localhost:5672/")
+	if err != nil {
+		panic(err)
+	}
 
-	grpcServer := grpcService.NewGRPCServer(inMemoryRepo, inMemoryNotificationRepo)
-	grpcServer.Serve(5052)
+	grpcServer := grpcService.NewGRPCServer(inMemoryRepo, rabbitmqRepository)
+	grpcServer.Serve(port)
 }
