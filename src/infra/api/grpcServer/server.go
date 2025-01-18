@@ -12,7 +12,7 @@ import (
 )
 
 type GRPCServer struct {
-	TaskServiceServer
+	UnimplementedTaskServiceServer
 	TaskService *services.TaskService
 }
 
