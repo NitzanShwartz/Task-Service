@@ -3,6 +3,7 @@ module github.com/NitzanShwartz/Task-Service
 go 1.23.4
 
 require (
+	github.com/rabbitmq/amqp091-go v1.10.0
 	google.golang.org/grpc v1.69.4
 	google.golang.org/protobuf v1.36.2
 )
