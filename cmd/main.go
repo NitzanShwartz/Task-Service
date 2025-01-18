@@ -9,7 +9,6 @@ const port = 5052
 
 func main() {
 	inMemoryRepo := repositories.NewInMemoryTaskRepository()
-	// inMemoryNotificationRepo := repositories.NewInMemoryNotificationRepository()
 	rabbitmqRepository, err := repositories.NewRabbitMQNotificationRepository("amqp://guest:guest@localhost:5672/")
 	if err != nil {
 		panic(err)
